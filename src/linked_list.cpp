@@ -61,15 +61,21 @@ Element LinkedList::Remove(int index) {
 }
 
 void LinkedList::Clear() {
-  // Tip 1: люди в черном (MIB) пришли стереть вам память
-  // напишите свой код здесь ...
+    Node *current_node = head_;
+    while (current_node != nullptr) {
+        Node *nextNode = current_node->next;
+        delete current_node;
+        head_= nextNode;
+        current_node = head_;
+        size_ --;
+    }
+    tail_ = nullptr;
 }
 
 Element LinkedList::Get(int index) const {
   internal::check_out_of_range(index, 0, size_);
     Node *node = find_node(index);
     return node->data;
-  return {};
 }
 
 int LinkedList::IndexOf(Element e) const {
