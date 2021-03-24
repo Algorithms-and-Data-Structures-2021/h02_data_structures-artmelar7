@@ -67,20 +67,40 @@ void LinkedList::Clear() {
 
 Element LinkedList::Get(int index) const {
   internal::check_out_of_range(index, 0, size_);
-  // напишите свой код здесь ...
+    Node *node = find_node(index);
+    return node->data;
   return {};
 }
 
 int LinkedList::IndexOf(Element e) const {
-  // напишите свой код здесь ...
-  return {};
+    int counter = 0;
+    for (Node *current_node = head_; current_node != nullptr; current_node = current_node->next) {
+        if (current_node->data == e) return counter;
+        counter++;
+    }
+    return -1;
 }
 
 Node *LinkedList::find_node(int index) const {
   assert(index >= 0 && index < size_);
-  // Tip 1: можете сразу обработать случаи поиска начала и конца списка
-  // напишите свой код здесь ...
-  return {};
+    int counter = 0;
+
+    if(index == 0){
+        return head_;
+    }
+
+    if(index == size_ - 1){
+        return tail_;
+    }
+
+    for(Node *i = head_; i != nullptr; i = i->next){
+        if(counter == index){
+            return i;
+        }
+        counter++;
+    }
+
+    return nullptr;
 }
 
 // РЕАЛИЗОВАНО
