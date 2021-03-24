@@ -8,29 +8,48 @@
 namespace itis {
 
 void LinkedList::Add(Element e) {
-  // Tip 1: создайте узел в куче со переданным значением
-  // Tip 2: есть 2 случая - список пустой и непустой
-  // Tip 3: не забудьте обновить поля head и tail
-  // напишите свой код здесь ...
+    Node* node = new Node(e, nullptr);
+    if (size_ == 0) {
+        head_ = node;
+        tail_ = node;
+    } else {
+        tail_->next = node;
+        tail_ = node;
+    }
+    size_ += 1;
 }
 
 void LinkedList::Insert(int index, Element e) {
   internal::check_out_of_range(index, 0, size_ + 1);
+    if (head_ == nullptr) {
+        Node *node = new Node(e, nullptr);
+        head_ = node;
+        tail_ = node;
+    }
+    if (index == size_) {
+        Node *node = new Node(e, nullptr);
+        tail_->next = node;
+        tail_ = node;
+    }
 
-  // Tip 1: вставка элементов на позицию size эквивалентно операции добавления в конец
-  // Tip 2: рассмотрите несколько случаев:
-  //        (1) список пустой,
-  //        (2) добавляем в начало списка,
-  //        (3) добавляем в конец списка
-  //        (4) все остальное
+    if (index == 0) {
+        Node *node = new Node(e, head_);
+        node->next = head_;
+        head_ = node;
+    }
 
-  // напишите свой код здесь ...
+    if(index > 0 && index < size_){
+        Node *previousNode = find_node(index-1);
+        Node *currentNode = new Node(e,find_node(index));
+        previousNode->next = currentNode;
+    }
+    size_++;
 }
 
 void LinkedList::Set(int index, Element e) {
   internal::check_out_of_range(index, 0, size_);
-  // Tip 1: используйте функцию find_node(index)
-  // напишите свой код здесь ...
+  Node *node = find_node(index);
+  node->data = e;
 }
 
 Element LinkedList::Remove(int index) {
